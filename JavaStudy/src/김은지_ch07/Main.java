@@ -38,22 +38,9 @@ public class Main {
 		System.out.println();
 			
 			
-        System.out.println("--------------- StringLinkedListTest  ---------------");
+        System.out.println("---------------- StringLinkedListTest  ----------------");
         
 	        StringLinkedList stringLinkedList = new StringLinkedList();
-	        
-//	        String[] array =  {"1","a","2","b","3","c"};
-//	        
-//	        for(int i = 0; i < array.length; i++){
-//	        	stringLinkedList.add(array[i]);
-//	        }
-//	       
-//	        stringLinkedList.add(0, "5");
-//	        stringLinkedList.add(3, "6");
-//	        stringLinkedList.get(3);
-//	        stringLinkedList.remove(2);
-//
-//	        stringLinkedList.clear();
 	        
 	        stringLinkedList.add("a"); // [a]
 			printList("add(a)", stringLinkedList);
@@ -81,7 +68,7 @@ public class Main {
 			stringLinkedList.remove(1); // [c, 0, ... ]
 			printList("remove(1)", stringLinkedList);
 			
-        System.out.println("--------------- StringLinkedListTest  ---------------");
+        System.out.println("---------------- StringLinkedListTest  ----------------");
 	}
 	
 	private static void print(String name, StringArrayList list) {

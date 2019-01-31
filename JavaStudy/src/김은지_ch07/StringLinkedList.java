@@ -24,29 +24,29 @@ public class StringLinkedList implements StringList {
         return x;
     }
     
+    
 	@Override
 	public void add(String value) {
 		
 		Node newNode = new Node(value);
-		
-		if(size == 0) {
-			newNode.next = head;
-			head = newNode;
-			size++;
-			    
-			if(head.next == null){
-				tail = head;
-			}
-			
-		} else {
-	        tail.next = newNode;
-	        tail = newNode;
-	        size++;
-		 }
-	}
 
-	@Override
+		newNode.next = head;
+		head = newNode;
+        size++;
+        
+        if(head.next == null){
+            tail = head;
+        }
+        
+	}
+	
+
 	public void add(int index, String value) {
+		
+		if(index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException("No Index Size");
+		}
+		
 	    Node temp1 = node(index-1);
 	    Node temp2 = temp1.next;
 	    
@@ -63,15 +63,18 @@ public class StringLinkedList implements StringList {
 	}
 	
 
-	@Override
 	public String get(int index) {
+		
+		if(index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException("No Index Size");
+		}
 		
 	    Node temp = head;
 	    
 	    for (int i = 0; i<index; i++) {
 	    	temp = temp.next;
 	    }
-	    
+	  
 	    if (temp.next != null) {
 	    	return temp.next.str;
 	    } else {
@@ -79,8 +82,13 @@ public class StringLinkedList implements StringList {
 	    }
 	}
 
-	@Override
-	public void remove(int index) {   
+
+	public void remove(int index) {  
+		
+		if(index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException("No Index Size");
+		}
+		
 	   Node headNode = this.head;
        if(headNode == null) { 
     	   System.out.println("No data");

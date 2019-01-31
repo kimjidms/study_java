@@ -29,8 +29,13 @@ class StringArrayList implements StringList{
 	}
 
 	// 특정위치에 값 추가.
-	@Override
+
 	public void add(int index, String string) {
+		
+		if(index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException("No Index Size");
+		}
+		
 		if (isEmpty()) {
 			ensureCapacity();
 			list[index] = string;
@@ -45,14 +50,22 @@ class StringArrayList implements StringList{
 	}
 
 	// 특정위치의 값을 반환. index =< size 가정
-	@Override
 	public String get(int index) {
+		
+		if(index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException("No Index Size");
+		}
+		
 		return list[index];
 	}
 
 	// 특정위치 값을 삭제.
-	@Override
 	public void remove(int index) {
+		
+		if(index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException("No Index Size");
+		}
+		
 		String[] tmp = new String[list.length-1];
 
 		System.arraycopy(list, 0, tmp, 0, index);
@@ -81,8 +94,9 @@ class StringArrayList implements StringList{
 	
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		String[] tmp = new String[0];
+		System.arraycopy(list, 0, tmp, 0, 0);
+		list = tmp;
 	}
 
 	// values 를 가지는 리스트 생성후 리턴
