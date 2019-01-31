@@ -41,30 +41,60 @@ public class Main {
         System.out.println("--------------- StringLinkedListTest  ---------------");
         
 	        StringLinkedList stringLinkedList = new StringLinkedList();
-	        String[] array =  {"1","a","2","b","3","c"};
 	        
-	        for(int i = 0; i < array.length; i++){
-	        	stringLinkedList.add(array[i]);
-	        }
-	       
-	        stringLinkedList.add(0, "5");
-	        stringLinkedList.add(3, "6");
-	        System.out.println(stringLinkedList.get(3));
-       
-	      
-	        // stringLinkedList.remove(2);
-	        // stringLinkedList.clear();
-	 
-	        for(int i = 0; i < stringLinkedList.size()-1; i++){
-	        	System.out.print(stringLinkedList.get(i));
-	        }
-	        System.out.println();
-
+//	        String[] array =  {"1","a","2","b","3","c"};
+//	        
+//	        for(int i = 0; i < array.length; i++){
+//	        	stringLinkedList.add(array[i]);
+//	        }
+//	       
+//	        stringLinkedList.add(0, "5");
+//	        stringLinkedList.add(3, "6");
+//	        stringLinkedList.get(3);
+//	        stringLinkedList.remove(2);
+//
+//	        stringLinkedList.clear();
 	        
+	        stringLinkedList.add("a"); // [a]
+			printList("add(a)", stringLinkedList);
+	
+			StringLinkedList anotherList = new StringLinkedList();
+			printList("another", anotherList);
+	
+			stringLinkedList.add(0, "b"); // [b, a]
+			printList("add(0, b)", stringLinkedList);
+	
+			stringLinkedList.add(1, "c"); // [b, c, a];
+			printList("add(1, c)", stringLinkedList);
+	
+			for (int i = 0; i < 100; i++) {
+				stringLinkedList.add(i + "");
+			}
+			printList("add numbers", stringLinkedList);
+	
+			stringLinkedList.remove(0); // [c, a, 0, ... ]
+			printList("remove(0)", stringLinkedList);
+	
+			stringLinkedList.remove(list.size() - 1);
+			printList("remove last", stringLinkedList);
+	
+			stringLinkedList.remove(1); // [c, 0, ... ]
+			printList("remove(1)", stringLinkedList);
+			
         System.out.println("--------------- StringLinkedListTest  ---------------");
 	}
 	
 	private static void print(String name, StringArrayList list) {
+		System.out.println(name);
+		System.out.print("size = " + list.size() + ", [");
+		for (int i = 0; i < list.size(); i++) {
+			System.out.print(list.get(i) + ", ");
+		}
+		System.out.println("]");
+		System.out.println("-----------------");
+	}
+	
+	private static void printList(String name, StringLinkedList list) {
 		System.out.println(name);
 		System.out.print("size = " + list.size() + ", [");
 		for (int i = 0; i < list.size(); i++) {

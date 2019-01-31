@@ -79,7 +79,6 @@ public class StringLinkedList implements StringList {
 	    }
 	}
 
-	// 맨 끝에만 삭제가 됨
 	@Override
 	public void remove(int index) {   
 	   Node headNode = this.head;
@@ -107,18 +106,9 @@ public class StringLinkedList implements StringList {
 		return size;
 	}
 
-	// 맨 끝에만 삭제가 되고 null을 남김
 	@Override
 	public void clear() {
-    	  Node prev = head;
-    	  Node current = head.next;
-    	  
-          while(current.next != null){
-             prev = current;
-             current = current.next;
-          }
-        
-         prev.next = null;
+    	this.head = null;
 	}
 }
 
