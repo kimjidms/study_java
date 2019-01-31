@@ -5,20 +5,21 @@ import java.util.*;
 public class calendar {
 	 public static void main(String[] args) {
 		 
-		  Calendar cal = Calendar.getInstance();
+		  //현재 날짜와 시간 정보를 가진 Calendar 객체를 생성한다. 
+		  Calendar calendar = Calendar.getInstance();
 		  
-		  int year = cal.get(Calendar.YEAR);
-		  int month = cal.get(Calendar.MONTH) +1;
+		  int year = calendar.get(Calendar.YEAR);
+		  int month = calendar.get(Calendar.MONTH) + 1;
 		  
-		  System.out.println("           "+year + "년"+ month + "월");
+		  System.out.println("\n           "+year + "년"+ month + "월\n");
 		  System.out.println(" SUN MON THU WEN THR FRI SAT");
 		  System.out.println(" ---------------------------");
 		  
 		  Calendar sDay = Calendar.getInstance();
 		  Calendar eDay = Calendar.getInstance();
 		  
-		  sDay.set(year, month-1,1);
-		  eDay.set(year, month,1);
+		  sDay.set(year, month-1, 1);
+		  eDay.set(year, month, 1);
 		  eDay.add(Calendar.DATE, -1);
 		  
 		  int START_DAY_OF_WEEK = 0;
