@@ -29,50 +29,57 @@ class StringArrayList implements StringList{
 	}
 
 	// 특정위치에 값 추가.
-
+	@Override
 	public void add(int index, String string) {
-		
-		if(index < 0 || index >= size()) {
-			throw new IndexOutOfBoundsException("No Index Size");
-		}
-		
-		if (isEmpty()) {
-			ensureCapacity();
-			list[index] = string;
-		} else {
-			ensureCapacity();
+		try {
+			if(index < 0 || index >= size()) throw new IndexOutOfBoundsException();
+			
+			if (isEmpty()) {
+				ensureCapacity();
+				list[index] = string;
+			} else {
+				ensureCapacity();
 
-			for (int i = index; i < size()-1; i++) {
-				list[i+1] = list[i];
+				for (int i = index; i < size()-1; i++) {
+					list[i+1] = list[i];
+				}
+				list[index] = string;
 			}
-			list[index] = string;
-		}
+	
+		} catch (IndexOutOfBoundsException e){
+			System.out.println(e);
+		}		
 	}
 
 	// 특정위치의 값을 반환. index =< size 가정
+	@Override
 	public String get(int index) {
-		
-		if(index < 0 || index >= size()) {
-			throw new IndexOutOfBoundsException("No Index Size");
+		try {
+			if(index < 0 || index >= size()) throw new IndexOutOfBoundsException();
+			return list[index];
+
+		} catch (IndexOutOfBoundsException e){
+			System.out.println(e);
 		}
 		
-		return list[index];
+		return null;	
 	}
 
 	// 특정위치 값을 삭제.
+	@Override
 	public void remove(int index) {
-		
-		if(index < 0 || index >= size()) {
-			throw new IndexOutOfBoundsException("No Index Size");
+		try {
+			String[] tmp = new String[list.length-1];
+
+			System.arraycopy(list, 0, tmp, 0, index);
+			System.arraycopy(list, index + 1, tmp, index, tmp.length-index);
+
+			list = tmp;
+			idx = list.length;
+			
+		} catch (IndexOutOfBoundsException e){
+			System.out.println(e);
 		}
-		
-		String[] tmp = new String[list.length-1];
-
-		System.arraycopy(list, 0, tmp, 0, index);
-		System.arraycopy(list, index + 1, tmp, index, tmp.length-index);
-
-		list = tmp;
-		idx = list.length;
 	}
 
 	// 리스트가 비었는지 확인

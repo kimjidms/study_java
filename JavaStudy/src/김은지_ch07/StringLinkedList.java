@@ -42,66 +42,75 @@ public class StringLinkedList implements StringList {
 	
 
 	public void add(int index, String value) {
-		
-		if(index < 0 || index >= size()) {
-			throw new IndexOutOfBoundsException("No Index Size");
+		try {
+	
+			if(index < 0 || index >= size()) throw new IndexOutOfBoundsException();
+	
+			Node temp1 = node(index-1);
+		    Node temp2 = temp1.next;
+		    
+		    Node newNode = new Node(value);
+		    
+			temp1.next = newNode;
+			newNode.next = temp2;
+			
+			size++;
+			
+		    if(newNode.next == null){
+		        tail = newNode;
+		    }
+			
+		} catch (IndexOutOfBoundsException e){
+			System.out.println(e);
 		}
-		
-	    Node temp1 = node(index-1);
-	    Node temp2 = temp1.next;
-	    
-	    Node newNode = new Node(value);
-	    
-		temp1.next = newNode;
-		newNode.next = temp2;
-		
-		size++;
-		
-	    if(newNode.next == null){
-	        tail = newNode;
-	    }
 	}
 	
 
 	public String get(int index) {
-		
-		if(index < 0 || index >= size()) {
-			throw new IndexOutOfBoundsException("No Index Size");
+		try {
+			if(index < 0 || index >= size()) throw new IndexOutOfBoundsException();
+
+		    Node temp = head;
+		    
+		    for (int i = 0; i<index; i++) {
+		    	temp = temp.next;
+		    }
+		  
+		    if (temp.next != null) {
+		    	return temp.next.str;
+		    } else {
+		    	return null;
+		    }
+		    
+		} catch (IndexOutOfBoundsException e){
+			System.out.println(e);
 		}
 		
-	    Node temp = head;
-	    
-	    for (int i = 0; i<index; i++) {
-	    	temp = temp.next;
-	    }
-	  
-	    if (temp.next != null) {
-	    	return temp.next.str;
-	    } else {
-	    	return null;
-	    }
+		return null;
 	}
 
 
 	public void remove(int index) {  
-		
-		if(index < 0 || index >= size()) {
-			throw new IndexOutOfBoundsException("No Index Size");
-		}
-		
-	   Node headNode = this.head;
-       if(headNode == null) { 
-    	   System.out.println("No data");
-       }
-       
-       Node p = headNode;
+		try {
+			if(index < 0 || index >= size()) throw new IndexOutOfBoundsException();
+			
+			Node headNode = this.head;
+		       if(headNode == null) { 
+		    	   System.out.println("No data");
+		       }
+		       
+		       Node p = headNode;
 
-       for(int i = 0; i < index-1; i++){
-           p = p.next;
-       }
-       
-       p.next = p.next.next;
-       this.size--;
+		       for(int i = 0; i < index-1; i++){
+		           p = p.next;
+		       }
+		       
+		       p.next = p.next.next;
+		       this.size--;
+			
+		} catch (IndexOutOfBoundsException e){
+			System.out.println(e);
+		}
 	}
 
 	@Override
