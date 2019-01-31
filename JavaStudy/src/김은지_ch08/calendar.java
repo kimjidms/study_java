@@ -28,13 +28,15 @@ public class calendar {
 		  START_DAY_OF_WEEK = sDay.get(Calendar.DAY_OF_WEEK);
 		  END_DAY = eDay.get(Calendar.DATE);
 		  
-		  for (int i = 1; i< START_DAY_OF_WEEK; i++) {
+		  for (int i = 1; i < START_DAY_OF_WEEK; i++) {
 			   System.out.print("    ");
 		  }
 		  
-		  for (int i =1, n = START_DAY_OF_WEEK; i<=END_DAY; i++, n++) {
-			   System.out.print((i<10)?"   " + i :"  "+ i);
-			   if(n%7 ==0) System.out.println();
+		  for (int i = 1, n = START_DAY_OF_WEEK; i <= END_DAY; i++, n++) {
+			   System.out.print( (i<10) ? "   " + i :"  "+ i );
+			   if(n % 7 == 0) {
+				   System.out.println();
+			   }
 		  }
 	 }
 }
