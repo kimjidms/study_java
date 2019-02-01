@@ -84,7 +84,7 @@ public class Main {
 	private static void printList(String name, StringLinkedList list) {
 		System.out.println(name);
 		System.out.print("size = " + list.size() + ", [");
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i <  list.size(); i++) {
 			System.out.print(list.get(i) + ", ");
 		}
 		System.out.println("]");

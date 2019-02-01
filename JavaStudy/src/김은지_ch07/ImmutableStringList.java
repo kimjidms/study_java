@@ -1,8 +1,14 @@
 package 김은지_ch07;
 
+import java.util.Objects;
+
 public class ImmutableStringList implements StringList {
+	
+	private StringList list;
+	
 	public ImmutableStringList(StringList list) {
-		throw new UnsupportedOperationException("UnsupportedOperationException");
+		Objects.requireNonNull(list, "list");
+	    this.list = list;
 	}
 
 	@Override
@@ -12,12 +18,12 @@ public class ImmutableStringList implements StringList {
 
 	@Override
 	public boolean isEmpty() {
-		return false;
+		 return list.isEmpty();
 	}
 
 	@Override
 	public int size() {
-		return 0;
+		 return list.size();
 	}
 
 	@Override
@@ -32,7 +38,7 @@ public class ImmutableStringList implements StringList {
 
 	@Override
 	public String get(int index) {
-		return null;
+		return list.get(index);
 	}
 
 	@Override

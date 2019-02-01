@@ -27,7 +27,6 @@ public class StringLinkedList implements StringList {
     
 	@Override
 	public void add(String value) {
-		
 		Node newNode = new Node(value);
 
 		newNode.next = head;
@@ -44,7 +43,7 @@ public class StringLinkedList implements StringList {
 	public void add(int index, String value) {
 		try {
 	
-			if(index < 0 || index >= size()) throw new IndexOutOfBoundsException();
+			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 	
 			Node temp1 = node(index-1);
 		    Node temp2 = temp1.next;
@@ -68,31 +67,30 @@ public class StringLinkedList implements StringList {
 
 	public String get(int index) {
 		try {
-			if(index < 0 || index >= size()) throw new IndexOutOfBoundsException();
-
+			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
+		    
 		    Node temp = head;
 		    
-		    for (int i = 0; i<index; i++) {
-		    	temp = temp.next;
-		    }
-		  
-		    if (temp.next != null) {
-		    	return temp.next.str;
-		    } else {
-		    	return null;
-		    }
+			for (int i = 0; i < index; i++) {
+				temp = temp.next;
+			}
+
+			if (temp.next != null)
+				return temp.next.str;
+			
+			else
+				return null;
 		    
 		} catch (IndexOutOfBoundsException e){
 			System.out.println(e);
 		}
-		
 		return null;
 	}
 
 
 	public void remove(int index) {  
 		try {
-			if(index < 0 || index >= size()) throw new IndexOutOfBoundsException();
+			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 			
 			Node headNode = this.head;
 		       if(headNode == null) { 

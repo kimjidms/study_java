@@ -32,7 +32,7 @@ class StringArrayList implements StringList{
 	@Override
 	public void add(int index, String string) {
 		try {
-			if(index < 0 || index >= size()) throw new IndexOutOfBoundsException();
+			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 			
 			if (isEmpty()) {
 				ensureCapacity();
@@ -55,7 +55,7 @@ class StringArrayList implements StringList{
 	@Override
 	public String get(int index) {
 		try {
-			if(index < 0 || index >= size()) throw new IndexOutOfBoundsException();
+			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 			return list[index];
 
 		} catch (IndexOutOfBoundsException e){
@@ -69,6 +69,7 @@ class StringArrayList implements StringList{
 	@Override
 	public void remove(int index) {
 		try {
+			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 			String[] tmp = new String[list.length-1];
 
 			System.arraycopy(list, 0, tmp, 0, index);
