@@ -18,32 +18,32 @@ class StringArrayList implements StringList{
 
 	// 리스트 마지막에 값 추가
 	@Override
-	public void add(String string) {
+	public void add(Object value)  {
 		if (isEmpty()) {
 			ensureCapacity();
-			list[0] = string;
+			list[0] = (String) value;
 		} else {
 			ensureCapacity();
-			list[size()-1] = string;
+			list[size()-1] =  (String) value;
 		}
 	}
 
 	// 특정위치에 값 추가.
 	@Override
-	public void add(int index, String string) {
+	public void add(int index, Object value) {
 		try {
 			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 			
 			if (isEmpty()) {
 				ensureCapacity();
-				list[index] = string;
+				list[index] = (String) value;
 			} else {
 				ensureCapacity();
 
 				for (int i = index; i < size()-1; i++) {
 					list[i+1] = list[i];
 				}
-				list[index] = string;
+				list[index] =  (String) value;
 			}
 	
 		} catch (IndexOutOfBoundsException e){

@@ -26,8 +26,8 @@ public class StringLinkedList implements StringList {
     
     
 	@Override
-	public void add(String value) {
-		Node newNode = new Node(value);
+	public void add(Object value) {
+		Node newNode = new Node((String) value);
 
 		newNode.next = head;
 		head = newNode;
@@ -39,8 +39,8 @@ public class StringLinkedList implements StringList {
         
 	}
 	
-
-	public void add(int index, String value) {
+	@Override
+	public void add(int index, Object value) {
 		try {
 	
 			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
@@ -48,7 +48,7 @@ public class StringLinkedList implements StringList {
 			Node temp1 = node(index-1);
 		    Node temp2 = temp1.next;
 		    
-		    Node newNode = new Node(value);
+		    Node newNode = new Node((String) value);
 		    
 			temp1.next = newNode;
 			newNode.next = temp2;
@@ -125,6 +125,7 @@ public class StringLinkedList implements StringList {
 	public void clear() {
     	this.head = null;
 	}
+
 }
 
 
