@@ -51,14 +51,14 @@ public class Main {
             stringLinkedList.add(0, "b"); // [b, a]
             printList("add(0, b)", stringLinkedList);
     
-            stringLinkedList.add(1, "c"); // [b, c, a];
-            printList("add(1, c)", stringLinkedList);
+            stringLinkedList.add(0, "c"); // [c, b, a, ];
+            printList("add(0, c)", stringLinkedList);
     
-            for (int i = 0; i < 100; i++) {
-                stringLinkedList.add(i + "");
+            for (int i = 0; i < 10; i++) {
+                stringLinkedList.add(""+i);
             }
-            printList("add numbers", stringLinkedList);
-    
+            printList("add(2, d)", stringLinkedList);
+            
             stringLinkedList.remove(0); // [c, a, 0, ... ]
             printList("remove(0)", stringLinkedList);
     
@@ -82,9 +82,9 @@ public class Main {
     }
     
     private static void printList(String name, StringLinkedList list) {
-        System.out.println(name);
+    	System.out.println(name);
         System.out.print("size = " + list.size() + ", [");
-        for (int i = 0; i <  list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             System.out.print(list.get(i) + ", ");
         }
         System.out.println("]");

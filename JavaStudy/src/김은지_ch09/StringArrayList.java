@@ -18,7 +18,7 @@ class StringArrayList implements StringList{
 
 	// 리스트 마지막에 값 추가
 	@Override
-    public void add(Object value)  {
+    public void add(String value)  {
 		if (isEmpty()) {
 			ensureCapacity();
             list[0] = (String) value;
@@ -30,7 +30,7 @@ class StringArrayList implements StringList{
 
 	// 특정위치에 값 추가.
 	@Override
-    public void add(int index, Object value) {
+    public void add(int index, String value) {
 		try {
 			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 			

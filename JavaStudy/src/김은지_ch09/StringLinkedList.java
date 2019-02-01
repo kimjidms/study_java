@@ -11,89 +11,81 @@ public class StringLinkedList implements StringList {
         private String str;
         private Node next;
         
-        public Node(String value) {
-            this.str = value;
-            this.next = null;
+        public Node(Object value) {
+            this.str = (String) value;
         }
     }
-    
-    Node node(int index) {
-        Node x = head;
-        for (int i = 0; i < index; i++)
-            x = x.next;
-        return x;
-    }
-    
-    
+  
+
 	@Override
-    public void add(Object value) {
-        Node newNode = new Node((String) value);
-
-		newNode.next = head;
-		head = newNode;
-        size++;
-        
-        if(head.next == null){
-            tail = head;
-        }
-        
+	public void add(String value) {
+		 if(tail == null) {
+	        	head = tail = new Node(value);
+	        } else {
+	        	Node lastNode = new Node((String) value);
+	        	tail.next = lastNode;
+	        }
+	        size++;
 	}
-	
 
-    @Override
-    public void add(int index, Object value) {
+	@Override
+	public void add(int index, String value) {
 		try {
-	
+			
 			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 	
-			Node temp1 = node(index-1);
-		    Node temp2 = temp1.next;
-		    
-            Node newNode = new Node((String) value);
-		    
-			temp1.next = newNode;
-			newNode.next = temp2;
+			Node temp = new Node((String) value);
 			
-			size++;
-			
-		    if(newNode.next == null){
-		        tail = newNode;
-		    }
-			
+			if(index == 0) {
+				temp.next = head;
+				head = temp;
+				size++;
+			} else if (index > 0 && index < size-1) {
+				Node before = head;
+				
+				for(int i=0; i<index; i++) {
+					before = before.next;
+				}
+				
+				Node after = before.next;
+				before.next = temp;
+				temp.next = after;
+				size++;
+				
+			} else {
+				add(value);
+			}
 		} catch (IndexOutOfBoundsException e){
 			System.out.println(e);
 		}
 	}
-	
 
+	@Override
 	public String get(int index) {
 		try {
 			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 		    
-		    Node temp = head;
+		    Node node = head;
 		    
-			for (int i = 0; i < index; i++) {
-				temp = temp.next;
-			}
-
-			if (temp.next != null)
-				return temp.next.str;
-			
-			else
-				return null;
+		    if(index > 0) {
+		    	for(int i=0; i<index; i++) {
+		    		node = node.next;
+		    	}
+		    } 
+		    return node.str;
 		    
 		} catch (IndexOutOfBoundsException e){
 			System.out.println(e);
-		}
-		return null;
+			return null;
+		}	
 	}
 
-
-	public void remove(int index) {  
+	@Override
+	public void remove(int index) {
 		try {
 			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 			
-			Node headNode = this.head;
+			Node headNode = head;
 		       if(headNode == null) { 
 		    	   System.out.println("No data");
 		       }
@@ -105,7 +97,7 @@ public class StringLinkedList implements StringList {
 		       }
 		       
 		       p.next = p.next.next;
-		       this.size--;
+		       size--;
 			
 		} catch (IndexOutOfBoundsException e){
 			System.out.println(e);
@@ -124,8 +116,8 @@ public class StringLinkedList implements StringList {
 
 	@Override
 	public void clear() {
-    	this.head = null;
+		head = null;
+    	tail = null;
 	}
 }
-
 
