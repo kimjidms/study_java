@@ -12,8 +12,5 @@ public interface StringList{
 	 void clear(); 
 	 
 	 static StringList of(String... values) { return null; }
-	 
-	 static StringList immutableList(StringList list) {
-		 return new ImmutableStringList(list);
-	 }
+	
 }
