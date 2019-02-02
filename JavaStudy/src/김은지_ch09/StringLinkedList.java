@@ -18,7 +18,7 @@ public class StringLinkedList implements StringList {
 
 
 	@Override
-	public void add(String value) {
+	public void add(Object value) {
 		if(tail == null) {
 			head = tail = new Node(value);
 		} else {
@@ -30,7 +30,7 @@ public class StringLinkedList implements StringList {
 	}
 
 	@Override
-	public void add(int index, String value) {
+	public void add(int index, Object value) {
 		try {
 
 			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();

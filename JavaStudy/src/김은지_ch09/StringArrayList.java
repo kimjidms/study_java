@@ -1,4 +1,4 @@
-package 김은지_ch09;
+import java.util.Arrays;
 
 import java.util.Arrays;
 
@@ -18,37 +18,37 @@ class StringArrayList implements StringList{
 
 	// 리스트 마지막에 값 추가
 	@Override
-    public void add(String value)  {
+	public void add(Object value)  {
 		if (isEmpty()) {
 			ensureCapacity();
-            list[0] = (String) value;
+			list[0] = (String) value;
 		} else {
 			ensureCapacity();
-            list[size()-1] =  (String) value;
+			list[size()-1] =  (String) value;
 		}
 	}
 
 	// 특정위치에 값 추가.
 	@Override
-    public void add(int index, String value) {
+	public void add(int index, Object value) {
 		try {
 			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
-			
+
 			if (isEmpty()) {
 				ensureCapacity();
-                list[index] = (String) value;
+				list[index] = (String) value;
 			} else {
 				ensureCapacity();
 
 				for (int i = index; i < size()-1; i++) {
 					list[i+1] = list[i];
 				}
-                list[index] =  (String) value;
+				list[index] =  (String) value;
 			}
-	
+
 		} catch (IndexOutOfBoundsException e){
 			System.out.println(e);
-		}		
+		}
 	}
 
 	// 특정위치의 값을 반환. index =< size 가정
@@ -61,8 +61,8 @@ class StringArrayList implements StringList{
 		} catch (IndexOutOfBoundsException e){
 			System.out.println(e);
 		}
-		
-		return null;	
+
+		return null;
 	}
 
 	// 특정위치 값을 삭제.
@@ -77,7 +77,7 @@ class StringArrayList implements StringList{
 
 			list = tmp;
 			idx = list.length;
-			
+
 		} catch (IndexOutOfBoundsException e){
 			System.out.println(e);
 		}
@@ -99,7 +99,7 @@ class StringArrayList implements StringList{
 	public void ensureCapacity() {
 		list = Arrays.copyOf(list, ++idx);
 	}
-	
+
 	@Override
 	public void clear() {
 		String[] tmp = new String[0];
