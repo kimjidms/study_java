@@ -1,6 +1,6 @@
 package 김은지_ch09;
 
-public class StringLinkedList implements StringList {
+public class StringLinkedList<T>  implements List<T> {
 
 	private Node head;
 	private Node tail;
@@ -8,17 +8,18 @@ public class StringLinkedList implements StringList {
 
 	private class Node{
 
-		private String str;
+		private T str;
 		private Node next;
 
-		public Node(Object value) {
-			this.str = (String) value;
+		public Node(T value) {
+			this.str = value;
+			this.next = null;
 		}
 	}
 
 
 	@Override
-	public void add(Object value) {
+	public void add(T value) {
 		if(tail == null) {
 			head = tail = new Node(value);
 		} else {
@@ -30,89 +31,62 @@ public class StringLinkedList implements StringList {
 	}
 
 	@Override
-	public void add(int index, Object value) {
-		try {
+	public void add(int index, T value) {
+		if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 
-			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
+		Node temp = new Node(value);
 
-			Node temp = new Node((String) value);
+		if(index == 0) {
+			temp.next = head;
+			head = temp;
+			size++;
+		} else if (index > 0 && index < size-1) {
 
-			if(index == 0) {
-				temp.next = head;
-				head = temp;
-				size++;
-			} else if (index > 0 && index < size-1) {
-				Node before = head;
+			Node after = find(index).next;
+			find(index).next = temp;
+			temp.next = after;
+			size++;
 
-				for(int i=0; i<index; i++) {
-					before = before.next;
-				}
-
-				Node after = before.next;
-				before.next = temp;
-				temp.next = after;
-				size++;
-
-			} else {
-				add(value);
-			}
-		} catch (IndexOutOfBoundsException e){
-			System.out.println(e);
+		} else {
+			add(value);
 		}
 	}
 
+
 	@Override
-	public String get(int index) {
-		try {
-			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
-
-			Node node = head;
-
-			if(index > 0) {
-				for(int i=0; i<index; i++) {
-					node = node.next;
-				}
-			}
-			return node.str;
-
-		} catch (IndexOutOfBoundsException e){
-			System.out.println(e);
-			return null;
-		}
+	public T get(int index) {
+		if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
+		return find(index).str;
 	}
 
 	@Override
 	public void remove(int index) {
-		try {
-			size--;
-			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
+		size--;
+		if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 
-			if(index == 0) {
-				if (size > 1) {
-					head = head.next;
-				} else {
-					clear();
-				}
-			} else if(index > 0 && index < size -1) {
-				Node befor = head;
-
-				for (int i = 0; i < index -1; i++) {
-					befor = befor.next;
-				}
-
-				Node after = befor.next.next;
-				befor.next = after;
+		if(index == 0) {
+			if (size > 1) {
+				head = head.next;
 			} else {
-				Node node = head;
-
-				for (int i = 0; i < index; i++) {
-					node = node.next;
-				}
-				tail = node;
+				clear();
 			}
-		} catch (IndexOutOfBoundsException e){
-			System.out.println(e);
+		} else if(index < size -1) {
+			Node after = find(index).next.next;
+			find(index).next = after;
+		} else {
+			tail = find(index).next;
 		}
+
+	}
+
+	private Node find(int index) {
+		Node before = head;
+
+		for(int i=0; i<index; i++) {
+			before = before.next;
+		}
+
+		return before;
 	}
 
 	@Override
@@ -129,6 +103,7 @@ public class StringLinkedList implements StringList {
 	public void clear() {
 		head = null;
 		tail = null;
+		size = 0;
 	}
 }
 

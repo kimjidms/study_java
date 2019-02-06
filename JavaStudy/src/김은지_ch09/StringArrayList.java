@@ -1,86 +1,59 @@
-import java.util.Arrays;
+package 김은지_ch09;
 
 import java.util.Arrays;
 
-class StringArrayList implements StringList{
+public class StringArrayList<T> implements List<T> {
 
 	// 멤버 변수 선언
-	int idx;
-	String[] list;
+	private T[] list = (T[]) new String[0];
 
-	// 생성자 생성
-	StringArrayList() { }
+	public StringArrayList() { }
 
-	// capacity 만큼 배열 할당
-	StringArrayList(int capacity) {
-		list = new String[capacity];
+	public StringArrayList(int capacity) {
+		this.list = (T[]) new String[capacity];
 	}
 
 	// 리스트 마지막에 값 추가
 	@Override
-	public void add(Object value)  {
-		if (isEmpty()) {
-			ensureCapacity();
-			list[0] = (String) value;
-		} else {
-			ensureCapacity();
-			list[size()-1] =  (String) value;
-		}
+	public void add(T value) {
+		ensureCapacity();
+		list[size()-1] = value;
 	}
 
 	// 특정위치에 값 추가.
 	@Override
-	public void add(int index, Object value) {
-		try {
-			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
+	public void add(int index, T value) {
+		if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
 
-			if (isEmpty()) {
-				ensureCapacity();
-				list[index] = (String) value;
-			} else {
-				ensureCapacity();
-
-				for (int i = index; i < size()-1; i++) {
-					list[i+1] = list[i];
-				}
-				list[index] =  (String) value;
+		if (isEmpty()) {
+			ensureCapacity();
+			list[index] = value;
+		} else {
+			ensureCapacity();
+			for (int i = index; i < size()-1; i++) {
+				list[i+1] = list[i];
 			}
-
-		} catch (IndexOutOfBoundsException e){
-			System.out.println(e);
+			list[index] = value;
 		}
 	}
 
 	// 특정위치의 값을 반환. index =< size 가정
 	@Override
-	public String get(int index) {
-		try {
-			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
-			return list[index];
-
-		} catch (IndexOutOfBoundsException e){
-			System.out.println(e);
-		}
-
-		return null;
+	public T get(int index) {
+		if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
+		return list[index];
 	}
 
 	// 특정위치 값을 삭제.
 	@Override
 	public void remove(int index) {
-		try {
-			if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
-			String[] tmp = new String[list.length-1];
+		if(index < 0 || index > size()) throw new IndexOutOfBoundsException();
+		String[] tmp = new String[list.length-1];
 
-			System.arraycopy(list, 0, tmp, 0, index);
-			System.arraycopy(list, index + 1, tmp, index, tmp.length-index);
+		System.arraycopy(list, 0, tmp, 0, index);
+		System.arraycopy(list, index + 1, tmp, index, tmp.length-index);
 
-			list = tmp;
-			idx = list.length;
-
-		} catch (IndexOutOfBoundsException e){
-			System.out.println(e);
-		}
+		list = (T[]) tmp;
 	}
 
 	// 리스트가 비었는지 확인
@@ -92,29 +65,33 @@ class StringArrayList implements StringList{
 	// 리스트에 저장된 사이즈
 	@Override
 	public int size() {
-		return idx;
+		if (list == null) {
+			return 0;
+		} else {
+			return list.length;
+		}
 	}
 
 	// add()시 배열 공간이 부족하면 확보
 	public void ensureCapacity() {
+		int idx = list.length;
 		list = Arrays.copyOf(list, ++idx);
 	}
 
 	@Override
 	public void clear() {
-		String[] tmp = new String[0];
-		System.arraycopy(list, 0, tmp, 0, 0);
-		list = tmp;
+		list = null;
 	}
 
-	// values 를 가지는 리스트 생성후 리턴
-	public void of(String... values) {
+
+	public T[] of(String... values){
 		String[] value = values;
 		String[] tmp = new String[list.length + value.length];
 
 		System.arraycopy(list, 0, tmp, 0, list.length);
 		System.arraycopy(value, 0, tmp, size()+2, value.length);
 
-		list = tmp;
+		list = (T[]) tmp;
+		return this.list;
 	}
 }
