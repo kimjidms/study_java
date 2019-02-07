@@ -8,6 +8,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.*;
 
@@ -160,6 +166,52 @@ public class study_01 {
        /*
    	    * 12
    	    */
-       
+       StringBuilder sb = Stream.of("abc", "de")
+    		   .collect(StringBuilder::new,
+    				    StringBuilder::append,
+    				    StringBuilder::append);
+	  System.out.println(sb);
+	  
+	  List<Integer> list11 = IntStream.range(0, 20)
+			  .parallel()
+			  .collect(ArrayList::new, List::add, List::addAll);
+	  System.out.println(list11);
+	  
+	  List<Object> list22 = IntStream.range(0, 20)
+			  .parallel()
+			  .collect(ArrayList::new, List::add, List::add);
+	  System.out.println(list22);
+      System.out.println();System.out.println();
+      
+      
+      /*
+  	   * 13
+  	   */
+      Supplier<StringBuilder> supplier = StringBuilder::new;
+      BiConsumer<StringBuilder, Object> accumulator = StringBuilder::append;
+      BinaryOperator<StringBuilder> combiner = StringBuilder::append;
+      Function<StringBuilder, String> finisher = Object::toString;
+      
+      Collector<Object, StringBuilder, StringBuilder> c1 =
+       Collector.of(supplier, accumulator, combiner);
+      Collector<Object, StringBuilder, String> c2 =
+       Collector.of(supplier, accumulator, combiner, finisher); 
+      
+      StringBuilder sb1 = Stream.of("abc", "de").collect(c1);
+      System.out.println(sb1);
+      
+      String str2 = Stream.of("abc", "de").collect(c2);
+      System.out.println(str2);
+      
+      StringBuilder sb2 = Stream.of("abc", "de")
+       .collect(supplier, accumulator,
+    		   (BiConsumer<StringBuilder, StringBuilder>) StringBuilder::append);
+      System.out.println(sb2);
+      
+      
+      /*
+  	   * 14
+  	   */
+      
     }
 }
