@@ -1,13 +1,18 @@
 package 김은지_ch13;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -29,7 +34,8 @@ public class Main {
 	    	 students.add(student);
     	}
     	
-    	// 1. 학년별 인원수출력 (학년순)
+    	
+    	// 1. 학년별 인원수출력 (학년순) 
     	Map<Integer, Integer> map = new HashMap<>();
 
     	IntStream.range(0, students.size())
@@ -38,9 +44,13 @@ public class Main {
     			int count = Optional.ofNullable(map.get(key)).orElse(0);
     			map.put(key, count+1);
     		});
-    	System.out.println("1. Grade Count ==> " + map);
-    	
+    
+    	 List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+         Collections.sort(list, Comparator.comparing(Map.Entry::getKey));
+         System.out.println("1. Grade Count ==> " + list);
+         
   
+         
     	// 2. 남녀별 인원수 출력
     	Map<String, Integer> map2 = new HashMap<>();
     	
@@ -50,8 +60,12 @@ public class Main {
 				int count = Optional.ofNullable(map2.get(key)).orElse(0);
 				map2.put(key, count+1);
 		});
-    	System.out.println("2. Gender Count ==> " + map2);
     	
+   	   List<Map.Entry<String, Integer>> list2 = new ArrayList<>(map2.entrySet());
+       Collections.sort(list2, Comparator.comparing(Map.Entry::getKey));
+       System.out.println("2. Gender Count ==> " + list2);
+	    	
+       
     	
 		// 3. 학년별 남녀별 인원수 출력 
     	Map<Integer, Map<String, Long>> gradeGenderCount = new HashMap<>();
@@ -71,6 +85,7 @@ public class Main {
 			gradeGenderCount.put(key, value);
 		});
     	System.out.println("3. Grade/Gender Count ==> " + gradeGenderCount);
+    	
     	
     	
 		// 4. 전체학생 나이 평균
@@ -95,7 +110,11 @@ public class Main {
     		Double value = students.stream().filter(x -> x.getGrade() == key).mapToInt(x->x.getAge()).average().getAsDouble();
     		gradeAgeAvg.put(key, value);
     	});
-    	System.out.println("5. Grade/Age Avg ==> " + gradeAgeAvg);
+    	
+    	List<Map.Entry<Integer, Double>> list3 = new ArrayList<>(gradeAgeAvg.entrySet());
+        Collections.sort(list3, Comparator.comparing(Map.Entry::getKey));
+    	System.out.println("5. Grade/Age Avg ==> " + list3);
+    	
     	
     	
 		// 6. 이름이 외자인 학생 리스트 출력
@@ -112,29 +131,40 @@ public class Main {
     	System.out.println();
     	
     	
+    	
 		// 7. 동명이인이 가장 많은 학생 리스트 출력 (나이순, 학년순)
-    	Map<String, Integer> sameNameAndAge = new HashMap<>();
-    	Map<String, Integer> sameNameAndGrade = new HashMap<>();
+    	Map<String, Integer> sameName = new HashMap<>();
     			
     	IntStream.range(0, students.size())
 			.forEach(i -> {
 				String key = students.get(i).name;
-				int count = students.stream().filter(x -> x.getName() == key).mapToInt(x->x.getAge()).sum();
-				sameNameAndAge.put(key, count);
+				int count = Optional.ofNullable(sameName.get(key)).orElse(0);
+				sameName.put(key, count+1);
 		});
+    	
 
-    	IntStream.range(0, students.size())
-		.forEach(i -> {
-			String key = students.get(i).name;
-			int count = students.stream().filter(x -> x.getName() == key).mapToInt(x->x.getGrade()).sum();
-			sameNameAndGrade.put(key, count);
-		});
+    	Map<String, Integer> sortedMap = sameName.entrySet().stream()
+	    	.sorted(Entry.comparingByValue())
+	    	.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+	    	
+    	String nameAge = Collections.max(sortedMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+    	List<Student> studenList = new ArrayList<>();
     	
-    	String nameAge = Collections.max(sameNameAndAge.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
-    	String nameGrade = Collections.max(sameNameAndGrade.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+    	for (int i = 0; i <= sortedMap.size(); i++) {
+			  if (students.get(i).name.equals(nameAge)) {
+				  studenList.add(students.get(i));
+			  }
+    	}
     	
-    	System.out.println("7. Age Same Name ==> " + nameAge + " / Grade Same Name ==> " + nameGrade);
+    	studenList.stream()
+    		.sorted(Comparator.comparing(Student::getAge))
+    		.sorted(Comparator.comparing(Student::getGrade));
     	
+    	System.out.print("7. Age Same Name ==> {");
+    	for(int i = 0; i< studenList.size(); i++) {
+    		System.out.print(studenList.get(i).name + " , "+ studenList.get(i).age + " , "+ studenList.get(i).grade + " / ");
+    	}
+    	System.out.print(" }");
+   
     }
-
 }
