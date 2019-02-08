@@ -1,5 +1,7 @@
 package 김은지_ch16_2;
 
+import java.util.concurrent.ForkJoinPool;
+
 public class MergeSort {
 	
 	public static void sort(int[] arr) {
@@ -36,9 +38,13 @@ public class MergeSort {
 		 System.arraycopy(tmp, tmpStart, arr, from, size);
 	}
 
-	public static Object forkJoinSort(int[] arr, int threshold) {
-
-		return null;
+	public static void forkJoinSort(int[] arr, int threshold) {
+		
+		ForkJoinPool pool = new ForkJoinPool(); 
+		ArraySizeTask sizeTask = new ArraySizeTask(arr);
+		pool.invoke(sizeTask);
+		
+		// return null;
 	}
 }
 	
