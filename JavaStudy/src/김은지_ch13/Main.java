@@ -133,36 +133,35 @@ public class Main {
     	
     	
 		// 7. 동명이인이 가장 많은 학생 리스트 출력 (나이순, 학년순)
-    	Map<String, Integer> sameName = new HashMap<>();
+    	Map<String, Integer> nameCount = new HashMap<>();
     			
     	IntStream.range(0, students.size())
 			.forEach(i -> {
 				String key = students.get(i).name;
-				int count = Optional.ofNullable(sameName.get(key)).orElse(0);
-				sameName.put(key, count+1);
+				int count = Optional.ofNullable(nameCount.get(key)).orElse(0);
+				nameCount.put(key, count+1);
 		});
     	
-
-    	Map<String, Integer> sortedMap = sameName.entrySet().stream()
+    	nameCount.entrySet().stream()
 	    	.sorted(Entry.comparingByValue())
 	    	.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 	    	
-    	String nameAge = Collections.max(sortedMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
-    	List<Student> studenList = new ArrayList<>();
+    	String name = Collections.max(nameCount.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+    	List<Student> sameStudenList = new ArrayList<>();
     	
-    	for (int i = 0; i <= sortedMap.size(); i++) {
-			  if (students.get(i).name.equals(nameAge)) {
-				  studenList.add(students.get(i));
+    	for (int i = 0; i <= nameCount.size(); i++) {
+			  if (students.get(i).name.equals(name)) {
+				  sameStudenList.add(students.get(i));
 			  }
     	}
     	
-    	studenList.stream()
-    		.sorted(Comparator.comparing(Student::getAge))
-    		.sorted(Comparator.comparing(Student::getGrade));
+    	sameStudenList.stream()
+    		.sorted(Comparator.comparing(Student::getGrade))
+    		.sorted(Comparator.comparing(Student::getAge));
     	
     	System.out.print("7. Age Same Name ==> {");
-    	for(int i = 0; i< studenList.size(); i++) {
-    		System.out.print(studenList.get(i).name + " , "+ studenList.get(i).age + " , "+ studenList.get(i).grade + " / ");
+    	for(int i = 0; i< sameStudenList.size(); i++) {
+    		System.out.print(sameStudenList.get(i).name + " , age = "+ sameStudenList.get(i).age + " , grade = "+ sameStudenList.get(i).grade + " / ");
     	}
     	System.out.print(" }");
    
