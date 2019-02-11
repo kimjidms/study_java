@@ -165,5 +165,11 @@ public class Main {
     	}
     	System.out.print(" }");
    
+//    	Set<Student> result = students.parallelStream().collect(Strudent::getNaem,toCollection(()->new TrssSet<>(byAgeGrade)))
+//    			.entrySet().steram()
+//    			.sorted(bySize.reverse())
+//    			.map(Map.Entry::getValue)
+//    			.findFirst()
+//    			.orElseGet(TreeSet::new);
     }
 }
