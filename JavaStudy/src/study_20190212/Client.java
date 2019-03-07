@@ -26,7 +26,24 @@ public class Client {
 		 logger.log(Level.DEBUG, "msg 2");
 		 
 		 
-		 Context context = new Context();
+		 Context1 context = new Context1();
 		 for (int i = 0; i < 30; i++) context.alarm(); 
+		 
+		 
+		 
+		// a + b - (c + 10)
+		 Expr expr = minus(
+		 plus(var("a"), var("b")),
+		 plus(var("c"), num(10)));
+		 
+		 // context
+		 Map<String, Integer> context = new HashMap<>();
+		 context.put("a", 10);
+		 context.put("b", 20);
+		 context.put("c", 13);
+		 
+		 // interpret
+		 int result = expr.eval(context);
+		 System.out.println(result); 
 	}
 }
